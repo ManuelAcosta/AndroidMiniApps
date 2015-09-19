@@ -38,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
     Camera camera;
+
     //TextView txtPos;
     private boolean isLighOn = false;
     private boolean isFlashOn;
     private boolean hasFlash;
+
     CheckBox letBacklightDim;
     Parameters params;
     /**
@@ -50,15 +52,20 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mViewPager;
     PowerManager.WakeLock wl;
     boolean initDone = false;
-    private boolean isFlashWasOn;
     long cnt = -1;
+    AlertDialog alert;
+    int pos1 = -1;
+    //TextView txtPos;
+    private boolean isLighOn = false;
+    private boolean isFlashOn;
+    private boolean hasFlash;
+    private boolean isFlashWasOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
 
     public void flashTogggle(View v) {
         //showDialog("oChange ", "cnt " + cnt + " f " + isFlashOn );
@@ -77,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cameraFlashSetup(Context context) {
+        letBacklightDim = (CheckBox) findViewById(R.id.letLightDim);
+
         //showDialog("cameraFlashSetup ", "a cnt " + cnt );
         PackageManager pm = context.getPackageManager();
         // First check if device is supporting flashlight or not
@@ -89,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
         getCamera();
 
     }
-
-    AlertDialog alert;
 
     private void showDialog(String ttle, String msg) {
         if (alert == null) {
@@ -155,6 +162,20 @@ public class MainActivity extends AppCompatActivity {
             initDone = true;
             letBacklightDim = (CheckBox) findViewById(R.id.letLightDim);
             try {
+
+                screenNormalBacklightOff = (CheckBox) findViewById(R.id.backLightDontLeaveOn);
+                screenNormalBacklightOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        } else {
+                            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        }
+
+                    }
+                });
                 try {
                    /* txtPos = (TextView)findViewById(R.id.textView2);
                     if(txtPos != null) {
@@ -222,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void turnOffFlash() {
         Log.e("s2ner", "fl off ");
         //showDialog("off", "turnOffFlash isFlash " + isFlashOn + ", has " + this.hasFlash);
@@ -247,15 +267,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    int pos1 = -1;
-
     void positionAt(int position) {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         pos1 = position;
         // if(txtPos != null) {//DEBUG
         //txtPos.setText(pos1 + " a");
         // }
-
         if (letBacklightDim == null || (letBacklightDim != null && letBacklightDim.isChecked() == false)) {
             if (position == 2 || position == 3) {
                 this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -328,78 +345,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            positionAt(position);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            return 9;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            return "s2n " + position;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-    }
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -425,4 +370,78 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        static PlaceholderFragment MAIN1;
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            if(MAIN1 == null) MAIN1 = new PlaceholderFragment();
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            return rootView;
+        }
+
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+            positionAt(position);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            return PlaceholderFragment.newInstance(1);
+        }
+
+        @Override
+        public int getCount() {
+            return 9;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            return "s2n " + position;
+        }
+    }
+
+
 }

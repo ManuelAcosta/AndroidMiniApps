@@ -32,7 +32,10 @@
         android:id="@+id/letLightDim"
         android:layout_below="@+id/flashControl"
         android:layout_alignLeft="@+id/flashControl"
-        android:layout_alignStart="@+id/flashControl" />
+        android:layout_alignStart="@+id/flashControl"
+        android:clickable="false"
+        android:enabled="true"
+        android:focusable="false" />
 
 
 </RelativeLayout>
