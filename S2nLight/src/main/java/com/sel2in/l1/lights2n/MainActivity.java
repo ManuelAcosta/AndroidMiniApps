@@ -24,7 +24,7 @@ import android.hardware.Camera.Parameters;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.CompoundButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLighOn = false;
     private boolean isFlashOn;
     private boolean hasFlash;
-    CheckBox flashLeave;
+    CheckBox letBacklightDim;
     Parameters params;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cameraFlashSetup(Context context) {
-        flashLeave = (CheckBox) findViewById(R.id.flashLeaveOn);
         //showDialog("cameraFlashSetup ", "a cnt " + cnt );
         PackageManager pm = context.getPackageManager();
         // First check if device is supporting flashlight or not
@@ -112,14 +111,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         isFlashWasOn = false;
-        if (flashLeave == null || !flashLeave.isChecked()) {
-            if (isFlashOn) {
-                isFlashWasOn = true;
-                turnOffFlash();
-            } else {
-                isFlashWasOn = false;
-            }
+        if (isFlashOn) {
+            isFlashWasOn = true;
+            turnOffFlash();
+        } else {
+            isFlashWasOn = false;
         }
+
     }
 
     @Override
@@ -155,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!initDone) {
             initDone = true;
+            letBacklightDim = (CheckBox) findViewById(R.id.letLightDim);
             try {
                 try {
                    /* txtPos = (TextView)findViewById(R.id.textView2);
@@ -180,6 +179,17 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("s2ner", "starting " + e, e);
                 }
+                letBacklightDim.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            screenBackLightNormal();
+                        } else {
+                            screenBackLightOnInitiate(100);
+                        }
+
+                    }
+                });
             } catch (Throwable e) {
                 Log.e("s2ner", "init err " + e, e);
             }
@@ -242,21 +252,43 @@ public class MainActivity extends AppCompatActivity {
     void positionAt(int position) {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         pos1 = position;
-        // if(txtPos != null) {
+        // if(txtPos != null) {//DEBUG
         //txtPos.setText(pos1 + " a");
         // }
+
+        if (letBacklightDim == null || (letBacklightDim != null && letBacklightDim.isChecked() == false)) {
+            if (position == 2 || position == 3) {
+                this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            } else {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        }
         if (position == 0 || position == 8) {
             layout.screenBrightness = 1F;
         } else if (position == 1 || position == 7) {
             layout.screenBrightness = 0.5F;
-        } else if (position == 3 || position == 6) {
+        } else if (position == 2 || position == 6) {
             layout.screenBrightness = 0.2F;
-        } else if (position == 4) {
+        } else if (position == 3) {
             layout.screenBrightness = 0.1F;
-        } else if (position == 5) {
+        } else if (position == 4) {
             layout.screenBrightness = 0.0F;
+        } else if (position == 5) {
+            layout.screenBrightness = -1F;
         }
         getWindow().setAttributes(layout);
+    }
+
+    private void screenBackLightNormal() {
+        try {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            Log.e("s2ner", "screen backlight ini ");
+            if (wl != null) {
+                wl.release();
+            }
+        } catch (Exception e) {
+            Log.e("s2ner", "screenBackLightOnInitiate " + e, e);
+        }
     }
 
     private void screenBackLightOnInitiate(int mode) {
