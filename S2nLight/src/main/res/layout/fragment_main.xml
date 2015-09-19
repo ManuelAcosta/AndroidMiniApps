@@ -29,10 +29,13 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/flashLeaveOn"
+        android:id="@+id/backLightDontLeaveOn"
         android:layout_below="@+id/flashControl"
         android:layout_alignLeft="@+id/flashControl"
-        android:layout_alignStart="@+id/flashControl" />
+        android:layout_alignStart="@+id/flashControl"
+        android:clickable="false"
+        android:enabled="true"
+        android:focusable="false" />
 
 
 </RelativeLayout>
