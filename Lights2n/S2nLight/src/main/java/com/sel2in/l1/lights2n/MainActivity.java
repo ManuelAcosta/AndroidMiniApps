@@ -56,9 +56,7 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog alert;
     int pos1 = -1;
     //TextView txtPos;
-    private boolean isLighOn = false;
-    private boolean isFlashOn;
-    private boolean hasFlash;
+
     private boolean isFlashWasOn;
 
     @Override
@@ -68,13 +66,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void flashTogggle(View v) {
-        //showDialog("oChange ", "cnt " + cnt + " f " + isFlashOn );
-        //txtPos = (TextView)findViewById(R.id.textView2);
-        /*if(txtPos != null) {
-            txtPos.setText(pos1 + " a");
-        }else{
-            showDialog("flashTogggle ", "cnt " + cnt + " f " + isFlashOn + ", "  + pos1);
-        }*/
         cnt++;
         if (!isFlashOn) {
             turnOnFlash();
@@ -88,15 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
         //showDialog("cameraFlashSetup ", "a cnt " + cnt );
         PackageManager pm = context.getPackageManager();
-        // First check if device is supporting flashlight or not
+        // First check if device supports flashlight
         hasFlash = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-
         if (!hasFlash) {
-            showDialog("No Flash", "Your device does not have a flash light; that I can get hold of.");
+            showDialog("No Flash", "Your device does not have a flash light, that I can get hold of.");
             return;
         }
         getCamera();
-
     }
 
     private void showDialog(String ttle, String msg) {
@@ -121,10 +110,7 @@ public class MainActivity extends AppCompatActivity {
         if (isFlashOn) {
             isFlashWasOn = true;
             turnOffFlash();
-        } else {
-            isFlashWasOn = false;
         }
-
     }
 
     @Override
@@ -163,19 +149,10 @@ public class MainActivity extends AppCompatActivity {
             letBacklightDim = (CheckBox) findViewById(R.id.letLightDim);
             try {
 
-                screenNormalBacklightOff = (CheckBox) findViewById(R.id.backLightDontLeaveOn);
-                screenNormalBacklightOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                //screenNormalBacklightOff = (CheckBox) findViewById(R.id.backLightDontLeaveOn);
+                //screenNormalBacklightOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                        } else {
-                            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                        }
 
-                    }
-                });
                 try {
                    /* txtPos = (TextView)findViewById(R.id.textView2);
                     if(txtPos != null) {
@@ -273,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
         // if(txtPos != null) {//DEBUG
         //txtPos.setText(pos1 + " a");
         // }
+        
         if (letBacklightDim == null || (letBacklightDim != null && letBacklightDim.isChecked() == false)) {
             if (position == 2 || position == 3) {
                 this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

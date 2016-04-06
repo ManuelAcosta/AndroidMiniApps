@@ -37,5 +37,16 @@
         android:enabled="true"
         android:focusable="false" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/letLightDim"
+        android:layout_toStartOf="@+id/letLightDim" />
+
 
 </RelativeLayout>

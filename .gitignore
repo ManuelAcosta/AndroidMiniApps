@@ -1,8 +1,10 @@
 Lights2n/.gradle
 Lights2n/local.properties
 Lights2n/.idea/workspace.xml
-Lights2n/.idea/libraries
+Lights2n/.idea/
 .DS_Store
 Lights2n/build
 Lights2n/captures
 Lights2n/S2nLight/S2nLight-release.apk
+S2nLight.iml
+S2nLight.apk
