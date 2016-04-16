@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NumberShapres</string>
+
+    <string name="heading1">Number Shapes</string>
+    <string name="desp1">Enter a number to see if its triangular and/or a square</string>
+    <string name="action_settings">Settings</string>
+</resources>

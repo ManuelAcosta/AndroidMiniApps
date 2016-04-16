@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <TextView android:text="@string/heading1" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:textIsSelectable="true"
+        android:textAlignment="center"
+        android:id="@+id/textView"
+        android:textColor="@color/abc_tint_edittext"
+        android:paddingStart="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/desp1"
+        android:id="@+id/textView2"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calc"
+        android:id="@+id/goBtn"
+        android:onClick="calc"
+        android:nestedScrollingEnabled="true"
+        android:layout_alignBottom="@+id/txtNo"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Answer will go here"
+        android:id="@+id/ansTxt"
+        android:textSize="25sp"
+        android:layout_below="@+id/goBtn"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/txtNo"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/trisq"
+        android:contentDescription="Tri square"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:cropToPadding="true"
+        android:layout_below="@+id/ansTxt" />
+
+</RelativeLayout>
