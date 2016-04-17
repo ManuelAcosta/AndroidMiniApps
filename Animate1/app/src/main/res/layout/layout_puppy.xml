@@ -9,9 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/imgD"
-        android:src="@drawable/PuppyBeagle"
+        android:src="@drawable/beagle2"
         android:onClick="anim"
-        <!-- android:id="@id/aniImg" -->
-        />
+        android:id="@+id/aniImg"
+        android:alpha ="1"
 
+        />
+    <!-- puppy_beagle -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/imgD"
+        android:src="@drawable/puppy_beagle"
+        android:onClick="anim"
+        android:id="@+id/aniImg2"
+        android:alpha ="0"
+
+        />
 </RelativeLayout>

@@ -10,22 +10,37 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
-public class DoggyAnimActivity extends Activity {
+public class DoggyAnimActivity2 extends Activity {
 
     Timer tmr = null;
-    ImageView i1, i2;
+    ImageView i1;
     public void anim(View view){
-        //i1.setAlpha(1f);
-        //i1.setImageResource(R.drawable.beagle2);//beagle2
-       if(i1.getAlpha() == 0){//use another var for state
-           i1.animate().alpha(1f).setDuration(2300);
-           i2.animate().alpha(0f).setDuration(2000);
-       }else{
-           i2.animate().alpha(1f).setDuration(2300);
-           i1.animate().alpha(0f).setDuration(2000);
-       }
+        i1.setAlpha(1f);
+        i1.setImageResource(R.drawable.beagle2);//beagle2
+        //wait for 300 ms
+        //i1.animate().alpha(0.2f).setDuration(2400);
+        //        /.setImageResource(R.drawable.f2).alpha(1f).set
+
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.anim_fade);
+        i1.startAnimation(fadeIn);
+
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                i1.setImageResource(R.drawable.puppy_beagle);//beagle2
+                Animation fadeOut = AnimationUtils.loadAnimation(DoggyAnimActivity2.this, R.anim.anim_back);
+                i1.startAnimation(fadeOut);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
     }
 
     @Override
@@ -34,7 +49,6 @@ public class DoggyAnimActivity extends Activity {
         setContentView(R.layout.layout_puppy);
         tmr = new Timer("anim_dog", true);
         i1 = (ImageView) findViewById(R.id.aniImg);
-        i2 = (ImageView) findViewById(R.id.aniImg2);
     }
 
     @Override
