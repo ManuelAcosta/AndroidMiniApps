@@ -12,17 +12,34 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     public void calc(View view){
+        int errPos = 0;//not good
+        String s = "N/a";
         try {
             EditText t = (EditText) findViewById(R.id.txtNo);
             TextView ans = (TextView) findViewById(R.id.ansTxt);
 
-            String s = t.getText().toString();
+            s = t.getText().toString();
+            if(s == null)s="";
+            s = s.trim();
+            if(s.length() == 0){
+                Toast.makeText(getApplicationContext(), "Enter a number" , Toast.LENGTH_LONG).show();
+                return;
+            }
+            errPos  = 1;
             double d = Double.parseDouble(s);
+            errPos  = 2;
             NumberChecks nc = new NumberChecks(d);
+            errPos  = 3;
             s += " is square " + nc.isSquare() + " and is triangular :" + nc.isTriangular();
             ans.setText(s);
         }catch (Throwable e){
-            Toast.makeText(getApplicationContext(), "Err " + e, Toast.LENGTH_LONG);
+            String es = null;
+            if(errPos == 1){
+                es = "Could not convert input to number :" + s ;
+            }else{
+                es = "Err " + e + ", code :" + errPos;
+            }
+            Toast.makeText(getApplicationContext(), es, Toast.LENGTH_LONG).show();
         }
     }
 
