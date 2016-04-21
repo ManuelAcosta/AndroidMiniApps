@@ -1,7 +1,9 @@
 package com.sel2in.an.learn.animate.animate1;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,16 +18,37 @@ public class DoggyAnimActivity extends Activity {
 
     Timer tmr = null;
     ImageView i1, i2;
+    Point sizeDisplay;
+    int state = 0;
     public void anim(View view){
         //i1.setAlpha(1f);
         //i1.setImageResource(R.drawable.beagle2);//beagle2
-       if(i1.getAlpha() == 0){//use another var for state
-           i1.animate().alpha(1f).setDuration(2300);
-           i2.animate().alpha(0f).setDuration(2000);
-       }else{
-           i2.animate().alpha(1f).setDuration(2300);
-           i1.animate().alpha(0f).setDuration(2000);
-       }
+        //ani1();
+        if(state ==0) {
+            i1.animate().translationX(-(sizeDisplay.x / 3 + 15)).rotation(800).setDuration(2000);
+            state =1;
+        }else if(state ==1 ){
+            i1.animate().translationY((sizeDisplay.y / 3 - 15)).rotation(-300).rotation(150).setDuration(2500)
+            .scaleX(.5f)
+            ;
+            state =2;
+        }else if(state ==2 ){
+            i1.animate().scaleX(2f).translationX((sizeDisplay.x / 3 + 15)).rotation(-250).setDuration(2000);
+            state =3;
+        }else if(state ==3 ){
+            i1.animate().translationY(-(sizeDisplay.y / 3 - 15)).rotation(-400).setDuration(2000);
+            state =0;
+        }
+    }
+
+    private void ani1() {
+        if(i1.getAlpha() == 0){//use another var for state
+            i1.animate().alpha(1f).setDuration(2300);
+            i2.animate().alpha(0f).setDuration(2000);
+        }else{
+            i2.animate().alpha(1f).setDuration(2300);
+            i1.animate().alpha(0f).setDuration(2000);
+        }
     }
 
     @Override
@@ -35,6 +58,10 @@ public class DoggyAnimActivity extends Activity {
         tmr = new Timer("anim_dog", true);
         i1 = (ImageView) findViewById(R.id.aniImg);
         i2 = (ImageView) findViewById(R.id.aniImg2);
+        Display display = getWindowManager().getDefaultDisplay();
+        sizeDisplay = new Point();
+        display.getSize(sizeDisplay);
+
     }
 
     @Override
