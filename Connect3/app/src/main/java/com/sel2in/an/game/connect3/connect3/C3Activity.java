@@ -67,7 +67,7 @@ public class C3Activity extends AppCompatActivity {
 
     void newGame(){
         findViewById(R.id.playAgainLayout).setVisibility(View.INVISIBLE);
-        findViewById(R.id.gridLayout).setVisibility(View.VISIBLE);
+        //findViewById(R.id.gridLayout).setVisibility(View.VISIBLE);
         moveCount = 0;
         sureNew = false;
         state = NEW_STATE;
@@ -194,7 +194,7 @@ public class C3Activity extends AppCompatActivity {
         Log.i("stats", "Draws " + gameStats[0] + ", " + Cell_Names[1] + " " + gameStats[1] + ", " + Cell_Names[2] + " " + gameStats[2]);
 
         findViewById(R.id.playAgainLayout).setVisibility(View.VISIBLE);
-        findViewById(R.id.gridLayout).setVisibility(View.INVISIBLE);
+        //findViewById(R.id.gridLayout).setVisibility(View.INVISIBLE);
     }
 
     @Override

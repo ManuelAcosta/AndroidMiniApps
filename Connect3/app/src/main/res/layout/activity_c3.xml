@@ -125,8 +125,8 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#fffaff0b"
-        android:padding="10dp"
+        android:background="#138a1213"
+        android:padding="40dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/playAgainLayout"
@@ -135,14 +135,17 @@
     <TextView android:text="@string/v1" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtStatus"
+        android:background="#AC660010"
+        android:layout_gravity="top"
         />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#78550b0a"
             android:text="New Game"
             android:id="@+id/newBtn"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="top"
             android:onClick="newGame" />
 
     </LinearLayout>
