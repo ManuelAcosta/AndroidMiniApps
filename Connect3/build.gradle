@@ -10,6 +10,27 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+/*
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig getSigningConfig()
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def date = new Date();
+                    def formattedDate = date.format('yyyyMMddHHmmss')
+                    output.outputFile = "Connect 3 sel2in"
+                    //output.outputFile = new File(output.outputFile.parent,
+                    //      output.outputFile.name.replace("-release", "-" + formattedDate)
+                    //for Debug use output.outputFile = new File(output.outputFile.parent,
+                    //                             output.outputFile.name.replace("-debug", "-" + formattedDate)
+                    //)
+                }
+            }
+        }
+    }*/
+
 }
 
 allprojects {
@@ -17,3 +38,4 @@ allprojects {
         jcenter()
     }
 }
+

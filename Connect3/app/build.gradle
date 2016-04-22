@@ -17,9 +17,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    applicationVariants.all { variant ->
+        println("Iterating variant: " + variant.getName());
+
+        if (variant.getName().contains("world")) {
+            variant.buildConfigField "String", "URL_API_PATH", '"http://..."'
+        } else {
+            variant.buildConfigField "String", "URL_API_PATH", '"http://192.168...."'
+        }
+        variant.mergedFlavor.versionName = android.defaultConfig.versionName + "-" + variant.mergedFlavor.versionName;
+
+        variant.outputs.each { output ->
+            def apkName = "sel2inConnect3" + android.defaultConfig.versionCode;
+
+            if (variant.buildType.name.equals("release"))
+                apkName += "_" + variant.buildType.name;
+
+            apkName += ".apk";
+            println "*********" + "$project.buildDir/apk/" + apkName + "**********";
+            output.outputFile = file("$project.buildDir/apk/" + apkName)
+        }
+    }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.0.0-alpha2'
 }
+
