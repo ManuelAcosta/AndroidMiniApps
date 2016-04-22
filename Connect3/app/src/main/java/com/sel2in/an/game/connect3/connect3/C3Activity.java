@@ -99,8 +99,8 @@ public class C3Activity extends AppCompatActivity {
                 }
 
             } else {
-                Toast.makeText(getApplicationContext(), "This cell is already " + +(tag + 1) + " played!", Toast.LENGTH_SHORT).show();
-                errTone(ToneGenerator.TONE_DTMF_S, 240);
+                Toast.makeText(getApplicationContext(), "This cell " + (tag + 1) + " is already played!", Toast.LENGTH_SHORT).show();
+                errTone(ToneGenerator.TONE_DTMF_S, 340);
             }
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "squareClick Err " + e, Toast.LENGTH_LONG).show();
@@ -116,19 +116,28 @@ public class C3Activity extends AppCompatActivity {
 
     //current turn set img & animate
     private void play(int tag, int turn) {
+        animOn = true;
         moveCount++;
         cells[tag] = turn;
         float xD = (rnd.nextInt(150) + 50f) * (1 - rnd.nextInt(3));
         float yD = (rnd.nextInt(100) + (50f)) * (1 - rnd.nextInt(3));
-        ArcTranslateAnimation anim = new ArcTranslateAnimation(xD, 0, yD, 0);
         if (turn == RED_CELL) {
             cellImgs[tag].setImageResource(R.drawable.red);
         } else {
             cellImgs[tag].setImageResource(R.drawable.yellow);
         }
-        anim.setDuration(1850);
-        cellImgs[tag].startAnimation(anim);
-        new CheckGameAfterAnimTask().execute();
+        boolean arcAnim = false;
+        if(arcAnim) {
+            ArcTranslateAnimation anim = new ArcTranslateAnimation(xD, 0, yD, 0);
+            anim.setDuration(1850);
+            cellImgs[tag].startAnimation(anim);
+        }else{
+            cellImgs[tag].setX(cellImgs[tag].getX() + xD);
+            cellImgs[tag].setY(cellImgs[tag].getY() + yD);
+            cellImgs[tag].animate().xBy(-xD).yBy(-yD).setDuration(1850).start();
+        }
+        //new CheckGameAfterAnimTask().execute();
+        new CheckGameAfterAnimTask().doInBackground(null);
     }
 
     /**
@@ -219,7 +228,6 @@ public class C3Activity extends AppCompatActivity {
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView7);
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView8);
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView9);
-        newGame();
     }
 
     @Override
@@ -261,13 +269,17 @@ public class C3Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             animOn = true;
-            try {
-                Thread.sleep(1450);
-            } catch (Exception e) {
-            }
+            sleep(1150);
             checkGameStatus();
             animOn =false;
             return "done";
+        }
+    }
+
+    void sleep(long m){
+        try {
+            Thread.sleep(m);
+        } catch (Exception e) {
         }
     }
 }
