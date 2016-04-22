@@ -120,8 +120,6 @@ public class C3Activity extends AppCompatActivity {
         cells[tag] = turn;
         float xD = (rnd.nextInt(150) + 50f) * (1 - rnd.nextInt(3));
         float yD = (rnd.nextInt(100) + (50f)) * (1 - rnd.nextInt(3));
-        //cellImgs[tag].setY(cellImgs[tag].getY() + yD);
-        //cellImgs[tag].setX(cellImgs[tag].getX() + xD);
         ArcTranslateAnimation anim = new ArcTranslateAnimation(xD, 0, yD, 0);
         if (turn == RED_CELL) {
             cellImgs[tag].setImageResource(R.drawable.red);
