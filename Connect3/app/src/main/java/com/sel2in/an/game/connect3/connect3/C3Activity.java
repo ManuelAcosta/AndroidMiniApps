@@ -5,9 +5,11 @@ import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,6 +74,8 @@ public class C3Activity extends AppCompatActivity {
         for (int i = 0; i < cells.length; i++) {
             cells[i] = CLR_CELL;
             cellImgs[i].setImageDrawable(null);
+            //cellImgs[i].setBackground(R.drawable.border);
+            cellImgs[i].setBackgroundResource(R.drawable.border);
         }
         turn = RED_CELL;
         newBtn.setText("New game");
@@ -121,6 +125,7 @@ public class C3Activity extends AppCompatActivity {
         cells[tag] = turn;
         float xD = (rnd.nextInt(150) + 50f) * (1 - rnd.nextInt(3));
         float yD = (rnd.nextInt(100) + (50f)) * (1 - rnd.nextInt(3));
+        cellImgs[tag].setBackgroundResource(R.drawable.border_none);
         if (turn == RED_CELL) {
             cellImgs[tag].setImageResource(R.drawable.red);
         } else {
@@ -228,6 +233,11 @@ public class C3Activity extends AppCompatActivity {
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView7);
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView8);
         cellImgs[i++] = (ImageView) findViewById(R.id.imageView9);
+        //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams ;
+        for(i =0 ; i < cellImgs.length;i++){
+
+           // cellImgs[i].setLayoutParams(params);
+        }
     }
 
     @Override
