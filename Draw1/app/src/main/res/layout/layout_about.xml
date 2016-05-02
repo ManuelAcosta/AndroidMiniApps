@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1" tools:context=".AboutActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/homePageBtnText"
+        android:ems="18"
+        android:id="@+id/url1"
+        android:layout_weight="0.11"
+        android:onClick="goweb"
+        android:textColor="#1b19ff"
+        android:textColorHighlight="#1b19ff"
+        android:textColorLink="#241cff"
+        android:textIsSelectable="true" /> <!-- textEmailAddress -->
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/txt"
+        android:layout_weight="0.11"
+
+        android:text="@string/txtAbout2"
+        android:textIsSelectable="true" />
+    <!-- android:inputType="textMultiLine" -->
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/webView"
+        android:layout_weight="0.81" />
+
+
+</LinearLayout>
