@@ -1,0 +1,1 @@
+copy /y "D:\u\prog\www\github\tgkprog\AndroidMiniApps\SoundLevel\app\build\outputs\apk\app-release-unaligned.apk" "D:\u\prog\www\github\tgkprog\AndroidMiniApps\web\SoundLevel.apk"
