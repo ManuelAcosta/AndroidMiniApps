@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         // if(txtPos != null) {//DEBUG
         //txtPos.setText(pos1 + " a");
         // }
-        
+
         if (letBacklightDim == null || (letBacklightDim != null && letBacklightDim.isChecked() == false)) {
             if (position == 2 || position == 3) {
                 this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 wl.release();
             }
         } catch (Exception e) {
-            Log.e("s2ner", "screenBackLightOnInitiate " + e, e);
+            Log.e("s2ner", "screenBackLightNormal " + e, e);
         }
     }
 

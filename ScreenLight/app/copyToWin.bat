@@ -1,0 +1,1 @@
+copy "D:\u\prog\www\github\tgkprog\AndroidMiniApps\ScreenLight\app\app-release.apk" ..\..\web\EK_Screen_Light.apk
