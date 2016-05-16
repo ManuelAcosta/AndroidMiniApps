@@ -15,16 +15,12 @@ ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\Andro
 		INJECTED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml
 application
 ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:5:5-19:19
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:8:9-41
 	android:allowBackup
 		ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:6:9-35
 	android:icon
 		ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:7:9-43
-	android:theme
-		ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:9:9-40
 activity#com.sel2in.an.test1.MainActivity
 ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:10:9-18:20
 	android:label
@@ -43,8 +39,6 @@ ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\Andro
 		ADDED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml:16:27-74
 uses-sdk
 INJECTED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		INJECTED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml
 		INJECTED from D:\u\prog\www\github\tgkprog\AndroidMiniApps\Test1\app\src\main\AndroidManifest.xml
