@@ -37,10 +37,11 @@
 
 <a href=SoundLevel.apk>Sound Level</a> 6 May (d).
 <br><br>
-<a href=EK_Screen_Light.apk>Screen & Flash Light</a> 6 May (d).
+<font size='+1'>
+<a href=EK_Screen_Light.apk>Screen & Flash Light</a> 11 May. <a href=ek-tic-tac-toe.apk>tic tac </a>
 
 <br><br><br>
-
+</font>
 
 <br>
 <a href=/>Home</a>
@@ -56,5 +57,11 @@ You can e-mail us at: <a href="mailto:tgkprog@gmail.com">tgkprog@gmail.com</a>
     >Powerful search</a> & start page (uses google)</p>
     </div>
 
+
+
+<br><br><br>
+
+Testing only:
+<a href=app4-release.apk>Shell Api 4 app</a>
     </body>
 </html>

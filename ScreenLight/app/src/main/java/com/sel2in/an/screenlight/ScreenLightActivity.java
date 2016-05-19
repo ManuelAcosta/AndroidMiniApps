@@ -36,11 +36,12 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ScreenLightActivity extends AppCompatActivity {
 
-
-    Camera camera;
+    private static boolean firstTime = true;
+    private Camera camera;
 
     //TextView txtPos;
     private boolean isLighOn = false;
@@ -64,14 +65,17 @@ public class ScreenLightActivity extends AppCompatActivity {
     float xStartDrag;
 
     private boolean isFlashWasOn;
-    DecimalFormat numbrF = new DecimalFormat(".##");
+    DecimalFormat numbrF = new DecimalFormat("0.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
+    }
+
+    private void crt(){
         try {
-            setContentView(R.layout.activity_main);
-            txtStatus = (TextView) findViewById(R.id.txtStatus);
             screenBackLightOnInitiate(100);
             Log.i("s2ner", "onCreate 1 ");
             Context context = this;
@@ -91,8 +95,6 @@ public class ScreenLightActivity extends AppCompatActivity {
 
                     } else {
                         view.setVisibility(View.VISIBLE);
-
-
                     }
                     return true;
                 }
@@ -122,6 +124,7 @@ public class ScreenLightActivity extends AppCompatActivity {
                 }
 
             });
+
         } catch (Throwable e) {
             Log.e("s2ner", "onCreate " + e, e);
         }
@@ -129,10 +132,26 @@ public class ScreenLightActivity extends AppCompatActivity {
 
     public void flashTogggle(View v) {
         cnt++;
-        if (!isFlashOn) {
-            turnOnFlash();
-        } else {
-            turnOffFlash();
+        try {
+            if(firstTime){
+                showDialog("a dia", "hi there" + new java.util.Date());
+                try {
+                    Thread.sleep(200);
+                }catch (Exception e){
+
+                }
+                crt();
+                positionAt(0);
+                firstTime = false;
+            }
+            if (!isFlashOn) {
+                turnOnFlash();
+            } else {
+                turnOffFlash();
+            }
+        }catch (Throwable e2){
+            Log.e("btn", "err " + e2,e2);
+
         }
     }
 
@@ -152,18 +171,19 @@ public class ScreenLightActivity extends AppCompatActivity {
     }
 
     private void showDialog(String ttle, String msg) {
-        if (alert == null) {
-            alert = new AlertDialog.Builder(ScreenLightActivity.this)
-                    .create();
-        }
-        alert.setTitle(ttle);
-        alert.setMessage(msg);
-        alert.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                alert.hide();
-            }
-        });
-        alert.show();
+        Toast.makeText(getApplicationContext(), ttle + " " + msg, Toast.LENGTH_LONG).show();
+//        if (alert == null) {
+//            alert = new AlertDialog.Builder(ScreenLightActivity.this)
+//                    .create();
+//        }
+//        alert.setTitle(ttle);
+//        alert.setMessage(msg);
+//        alert.setButton("OK", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                alert.hide();
+//            }
+//        });
+//        alert.show();
     }
 
     @Override
@@ -197,7 +217,7 @@ public class ScreenLightActivity extends AppCompatActivity {
             try {
                 camera = Camera.open();
                 params = camera.getParameters();
-            } catch (RuntimeException e) {
+            } catch (Throwable e) {
                 Log.e("s2ner", "Camera Error. Failed to Open. Error: " + e, e);
             }
         }
@@ -206,6 +226,7 @@ public class ScreenLightActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         Log.i("s2ner", "onStart ");
     }
 
@@ -230,8 +251,6 @@ public class ScreenLightActivity extends AppCompatActivity {
             }
             isFlashOn = true;
 
-            // changing button/switch image
-            //toggleButtonImage();
         }
 
     }
@@ -258,25 +277,30 @@ public class ScreenLightActivity extends AppCompatActivity {
     }
 
     void positionAt(int position) {
-        WindowManager.LayoutParams layout = getWindow().getAttributes();
-        pos1 += position;
-        if (pos1 < 1) {
-            pos1 = 10;
-        } else if (pos1 > 10) {
-            pos1 = 1;
+        try {
+            WindowManager.LayoutParams layout = getWindow().getAttributes();
+            pos1 += position;
+            if (pos1 < 1) {
+                pos1 = 10;
+            } else if (pos1 > 10) {
+                pos1 = 1;
+            }
+            if (pos1 < 10) {
+                layout.screenBrightness = 1f - (((float) pos1 - 1f) / 10f);
+            } else {
+                layout.screenBrightness = 0.1f;
+            }
+            bright = layout.screenBrightness;
+            txtStatus.setText(dimScreen + pos1 + " " + numbrF.format(bright));
+            getWindow().setAttributes(layout);
+        }catch (Throwable e){
+            Log.i("posAT", "err " + e + pos1 + dimScreen,e);
         }
-        if (pos1 < 10) {
-            layout.screenBrightness = 1f - (((float) pos1 - 1f) / 10f);
-        } else {
-            layout.screenBrightness = 0.1f;
-        }
-        bright = layout.screenBrightness;
-        txtStatus.setText(dimScreen + pos1 + " " + numbrF.format(bright));
-        getWindow().setAttributes(layout);
     }
 
     public void dimToggle(View v) {
         letBacklightDim = (CheckBox) v;
+        Log.i("dimToggle", " ch " + letBacklightDim.isChecked());
         if (letBacklightDim.isChecked()) {
             screenBackLightOnInitiate(100);
             dimScreen = "On ";
@@ -290,14 +314,16 @@ public class ScreenLightActivity extends AppCompatActivity {
 
     private void screenBackLightNormal() {
         try {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            Log.e("s2ner", "screen backlight ini ");
             if (wl != null) {
                 wl.release();
+                Log.i("s2ner", " wl re ");
             }
-        } catch (Exception e) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            Log.i("s2ner", "screen backlight ini ");
+        } catch (Throwable e) {
             Log.e("s2ner", "screenBackLightNormal " + e, e);
         }
+        wl = null;
     }
 
     private void screenBackLightOnInitiate(int mode) {
@@ -307,10 +333,14 @@ public class ScreenLightActivity extends AppCompatActivity {
             }
             getWindow().addFlags(mode);
             Log.e("s2ner", "screen backlight ini ");
-            PowerManager pwr = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wl = pwr.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "Bright Screen Torch");
-            wl.acquire();
-        } catch (Exception e) {
+            if(wl == null) {
+                PowerManager pwr = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                wl = pwr.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "Bright Screen Torch");
+                wl.setReferenceCounted(false);
+                wl.acquire();
+                Log.e("s2ner", " wl aq ");
+            }
+        } catch (Throwable e) {
             Log.e("s2ner", "screenBackLightOnInitiate " + e, e);
         }
     }
@@ -318,8 +348,8 @@ public class ScreenLightActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_screen_light, menu);
-        return false;//true;//false no menu
+        getMenuInflater().inflate(R.menu.menu_screen_light, menu);
+        return true;//true;//false no menu
     }
 
     @Override
@@ -327,14 +357,7 @@ public class ScreenLightActivity extends AppCompatActivity {
         super.onStop();
         Log.e("s2ner", "stop ");
         try {
-
-            if (wl != null) {
-                try {
-                    wl.release();
-                } catch (Throwable e) {
-                    //Okay
-                }
-            }
+            screenBackLightNormal();
             Log.e("s2ner", "stop 2. ");
             if (camera != null) {
                 try {

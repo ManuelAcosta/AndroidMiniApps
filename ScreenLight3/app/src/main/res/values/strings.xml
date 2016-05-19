@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Screen Light</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_options">-></string>
+    <string name="action_toggleFlash">Flash Off</string>
+    <string name="action_toggleDim">Dim On</string>
+
+    <string name="action_flastReinit">Flash init</string>
+    <string name="action_ScreenReinit">Screen init</string>
+
+    <string name="action_flashOff">Flash off</string>
+    <string name="action_ScreenDim">Screen dim</string>
+
+</resources>
