@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ScreenLightActivity">
+    <item android:id="@+id/action_options" android:title="@string/action_options"
+        android:orderInCategory="100" app:showAsAction="never" >
+        <menu>
+            <item android:id="@+id/action_toggleFlash" android:title="@string/action_toggleFlash"
+                android:orderInCategory="100" app:showAsAction="never" />
+            <item android:id="@+id/action_toggleDim" android:title="@string/action_toggleDim"
+                android:orderInCategory="100" app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>

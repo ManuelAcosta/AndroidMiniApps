@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/topLayout"
+    tools:context=".ScreenLightActivity"
+   >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:onClick="flashTogggle"
+        android:id="@+id/flashControl"
+        android:clickable="true"
+        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
+        android:backgroundTintMode="screen"
+        android:shadowColor="@color/abc_search_url_text_pressed"
+        android:layout_below="@+id/letLightDim"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I"
+        android:onClick="flashInitOn"
+        android:id="@+id/flashControlOn"
+        android:clickable="true"
+        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
+        android:backgroundTintMode="screen"
+        android:shadowColor="@color/abc_search_url_text_pressed"
+        android:layout_below="@+id/letLightDim"
+        android:layout_above="@+id/flashControl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/letLightDim"
+        android:clickable="true"
+        android:checked="true"
+        android:onClick="dimToggle"
+        android:enabled="true"
+        android:focusable="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/txtStatus"
+        android:layout_alignEnd="@+id/txtStatus"
+        android:layout_marginTop="113dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "On"
+        android:textSize="25dip"
+        android:id="@+id/txtStatus"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
+
+</RelativeLayout>
