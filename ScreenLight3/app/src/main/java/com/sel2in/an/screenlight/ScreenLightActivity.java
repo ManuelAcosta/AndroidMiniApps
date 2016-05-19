@@ -346,6 +346,14 @@ public class ScreenLightActivity extends AppCompatActivity {
             screenBackLightOnInit();
             positionAt(0);
             return true;
+        }else  if (id == R.id.actionFlashOff) {
+            turnOffFlash(true);
+            return true;
+        }else  if (id == R.id.actionScreenDim) {
+            screenBackLightNormal();
+            pos1 = 8;
+            positionAt(0);
+            return true;
         }
 
 

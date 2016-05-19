@@ -13,3 +13,4 @@ Draw1/app/hs*.log
 Draw1/app/re*.log
 .pvt/
 /build/
+*.apk

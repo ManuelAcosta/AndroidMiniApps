@@ -8,4 +8,8 @@
 
     <string name="action_flastReinit">Flash init</string>
     <string name="action_ScreenReinit">Screen init</string>
+
+    <string name="action_flashOff">Flash off</string>
+    <string name="action_ScreenDim">Screen dim</string>
+
 </resources>
