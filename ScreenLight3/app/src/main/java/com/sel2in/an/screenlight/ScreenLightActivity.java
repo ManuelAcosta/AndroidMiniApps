@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,7 +26,7 @@ public class ScreenLightActivity extends AppCompatActivity {
 
     private static boolean firstTime = true;
     private Camera camera;
-
+    private Context context;
     //TextView txtPos;
     private boolean isLighOn = false;
     private boolean isFlashOn;
@@ -48,31 +49,28 @@ public class ScreenLightActivity extends AppCompatActivity {
     float xStartDrag;
 
     private boolean isFlashWasOn;
-    DecimalFormat numbrF = new DecimalFormat("0.##");
+    DecimalFormat numbrF = new DecimalFormat("0.0#");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_main);
         txtStatus = (TextView) findViewById(R.id.txtStatus);
-        if(firstTime){
-            //showDialog("a dia", "hi there" + new java.util.Date());
-            try {
-                Thread.sleep(200);
-            }catch (Exception e){
+        try {
+            Thread.sleep(200);
+        } catch (Exception e) {
 
-            }
-            crt();
-            positionAt(0);
-            firstTime = false;
         }
+        crt();
+        positionAt(0);
     }
 
-    private void crt(){
+    private void crt() {
         try {
-            screenBackLightOnInitiate(100);
+            screenBackLightOnInit();
             Log.i("s2ner", "onCreate 1 ");
-            Context context = this;
+
             cameraFlashSetup(context);
             Log.e("s2ner", "onCreate 2 ");
             //show1Dialog("init", "init done 3");
@@ -124,50 +122,54 @@ public class ScreenLightActivity extends AppCompatActivity {
         }
     }
 
+    public void flashReInit() {
+        try {
+            if(firstTime){
+                showDialog("Screen light", "1st Click " + new java.util.Date());
+                firstTime = false;
+            }
+            cameraFlashSetup(context);
+            turnOffFlash(true);
+            turnOnFlash(true);
+        } catch (Throwable e2) {
+            Log.e("btn", "err " + e2, e2);
+
+        }
+    }
+
     public void flashTogggle(View v) {
         cnt++;
         try {
 
             if (!isFlashOn) {
-                turnOnFlash();
+                turnOnFlash(false);
             } else {
-                turnOffFlash();
+                turnOffFlash(false);
             }
-        }catch (Throwable e2){
-            Log.e("btn", "err " + e2,e2);
+        } catch (Throwable e2) {
+            Log.e("btn", "err " + e2, e2);
 
         }
     }
 
 
     private void cameraFlashSetup(Context context) {
-
-
-        //showDialog("cameraFlashSetup ", "a cnt " + cnt );
-        PackageManager pm = context.getPackageManager();
-        // First check if device supports flashlight
-        hasFlash = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        if (!hasFlash) {
-            showDialog("No Flash", "Your device does not have a flash light, that I can get hold of.");
-            return;
+        try {
+            PackageManager pm = context.getPackageManager();
+            // First check if device supports flashlight
+            hasFlash = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+            if (!hasFlash) {
+                showDialog("No Flash", "Your device does not have a flash light, that I can get hold of.");
+                return;
+            }
+            getCamera();
+        }catch(Throwable e){
+            Log.e("s2ner fls", "cameraFlashSetup " + e, e);
         }
-        getCamera();
     }
 
     private void showDialog(String ttle, String msg) {
         Toast.makeText(getApplicationContext(), ttle + " " + msg, Toast.LENGTH_LONG).show();
-//        if (alert == null) {
-//            alert = new AlertDialog.Builder(ScreenLightActivity.this)
-//                    .create();
-//        }
-//        alert.setTitle(ttle);
-//        alert.setMessage(msg);
-//        alert.setButton("OK", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                alert.hide();
-//            }
-//        });
-//        alert.show();
     }
 
     @Override
@@ -176,7 +178,7 @@ public class ScreenLightActivity extends AppCompatActivity {
         isFlashWasOn = false;
         if (isFlashOn) {
             isFlashWasOn = true;
-            turnOffFlash();
+            turnOffFlash(true);
         }
     }
 
@@ -191,7 +193,8 @@ public class ScreenLightActivity extends AppCompatActivity {
         // on resume turn on the flash
         if (isFlashWasOn) {
             isFlashWasOn = false;
-            turnOnFlash();
+            turnOffFlash(true);
+            turnOnFlash(true);
         }
     }
 
@@ -216,22 +219,20 @@ public class ScreenLightActivity extends AppCompatActivity {
 
 
     // Turning On flash
-    private void turnOnFlash() {
-        Log.e("s2ner", "fl on ");
+    private void turnOnFlash(boolean force) {
+        Log.i("s2ner", "fl on ");
         //showDialog("On", "flash on. Current :" + isFlashOn);
-        if (!isFlashOn) {
+        if (force || isFlashOn == false) {
             if (camera == null || params == null) {
                 return;
             }
-            // play sound
-            //playSound();
             try {
                 params = camera.getParameters();
                 params.setFlashMode(Parameters.FLASH_MODE_TORCH);
                 camera.setParameters(params);
                 camera.startPreview();
             } catch (Throwable e) {
-
+                Log.e("s2ner", "fl on er " + e, e);
             }
             isFlashOn = true;
 
@@ -239,10 +240,10 @@ public class ScreenLightActivity extends AppCompatActivity {
 
     }
 
-    private void turnOffFlash() {
-        Log.e("s2ner", "fl off ");
+    private void turnOffFlash(boolean force) {
+        Log.i("s2ner", "fl off ");
         //showDialog("off", "turnOffFlash isFlash " + isFlashOn + ", has " + this.hasFlash);
-        if (isFlashOn) {
+        if (isFlashOn || force) {
             if (camera == null || params == null) {
                 return;
             }
@@ -254,7 +255,7 @@ public class ScreenLightActivity extends AppCompatActivity {
                 camera.setParameters(params);
                 camera.stopPreview();
             } catch (Throwable e) {
-
+                Log.e("s2ner", "fl off er " + e, e);
             }
             isFlashOn = false;
         }
@@ -277,8 +278,8 @@ public class ScreenLightActivity extends AppCompatActivity {
             bright = layout.screenBrightness;
             txtStatus.setText(dimScreen + pos1 + " " + numbrF.format(bright));
             getWindow().setAttributes(layout);
-        }catch (Throwable e){
-            Log.i("posAT", "err " + e + pos1 + dimScreen,e);
+        } catch (Throwable e) {
+            Log.i("posAT", "err " + e + pos1 + dimScreen, e);
         }
     }
 
@@ -286,7 +287,7 @@ public class ScreenLightActivity extends AppCompatActivity {
         letBacklightDim = (CheckBox) v;
         Log.i("dimToggle", " ch " + letBacklightDim.isChecked());
         if (letBacklightDim.isChecked()) {
-            screenBackLightOnInitiate(100);
+            screenBackLightOnInit();
             dimScreen = "On ";
         } else {
             screenBackLightNormal();
@@ -310,14 +311,11 @@ public class ScreenLightActivity extends AppCompatActivity {
         wl = null;
     }
 
-    private void screenBackLightOnInitiate(int mode) {
+    private void screenBackLightOnInit() {
         try {
-            if (mode == 100) {
-                mode = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-            }
-            getWindow().addFlags(mode);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             Log.e("s2ner", "screen backlight ini ");
-            if(wl == null) {
+            if (wl == null) {
                 PowerManager pwr = (PowerManager) getSystemService(Context.POWER_SERVICE);
                 wl = pwr.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "Bright Screen Torch");
                 wl.setReferenceCounted(false);
@@ -325,7 +323,7 @@ public class ScreenLightActivity extends AppCompatActivity {
                 Log.e("s2ner", " wl aq ");
             }
         } catch (Throwable e) {
-            Log.e("s2ner", "screenBackLightOnInitiate " + e, e);
+            Log.e("s2ner", "screenBackLightOnInit " + e, e);
         }
     }
 
@@ -334,6 +332,24 @@ public class ScreenLightActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_screen_light, menu);
         return true;//true;//false no menu
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.actionReInitFlash) {
+            cameraFlashSetup(context);
+            flashReInit();
+            return true;
+        }else  if (id == R.id.actionReInitScreen) {
+            screenBackLightNormal();
+            screenBackLightOnInit();
+            positionAt(0);
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

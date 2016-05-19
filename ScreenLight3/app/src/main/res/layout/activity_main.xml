@@ -19,21 +19,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="39dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I"
-        android:onClick="flashInitOn"
-        android:id="@+id/flashControlOn"
-        android:clickable="true"
-        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
-        android:backgroundTintMode="screen"
-        android:shadowColor="@color/abc_search_url_text_pressed"
-        android:layout_below="@+id/letLightDim"
-        android:layout_above="@+id/flashControl"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp" />
-
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

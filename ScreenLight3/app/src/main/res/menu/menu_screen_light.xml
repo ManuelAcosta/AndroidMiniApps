@@ -4,9 +4,9 @@
     <item android:id="@+id/action_options" android:title="@string/action_options"
         android:orderInCategory="100" app:showAsAction="never" >
         <menu>
-            <item android:id="@+id/action_toggleFlash" android:title="@string/action_toggleFlash"
+            <item android:id="@+id/actionReInitFlash" android:title="@string/action_flastReinit"
                 android:orderInCategory="100" app:showAsAction="never" />
-            <item android:id="@+id/action_toggleDim" android:title="@string/action_toggleDim"
+            <item android:id="@+id/actionReInitScreen" android:title="@string/action_ScreenReinit"
                 android:orderInCategory="100" app:showAsAction="never" />
         </menu>
     </item>
